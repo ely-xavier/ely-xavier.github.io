@@ -1,0 +1,37 @@
+---
+title: "New England Patriots Stadium"
+author: "Ely X. Colon"
+date: "January 27, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE,echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+## R Markdown Project
+
+Create a web page using R Markdown that features a map created with Leaflet.
+
+Host your webpage on either GitHub Pages, RPubs, or NeoCities.
+
+Your webpage must contain the date that you created the document, and it must contain a map created with Leaflet.
+
+```{r prerequisites}
+library(leaflet)
+```
+
+```{r map}
+PatsLatLong <- data.frame(
+        lat = c(42.090962),
+        lng = c(-71.264400)
+)
+
+PatsSites <- c("<a href = 'http://www.patriots.com/' >Patriots Champs!</a>")
+
+PatsLatLong %>%
+        leaflet() %>%
+        addTiles() %>%
+        addMarkers(popup = PatsSites)
+```
+
