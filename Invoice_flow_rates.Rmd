@@ -1,0 +1,40 @@
+---
+title: "SAP Invoices flow rate by stage-system dummy example"
+author: "Ely X. Colon"
+date: "February 1, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE,echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+## Visualization for Invoicing flow path rate through SAP system
+
+
+```{r cars}
+# Load the following libraries
+library(networkD3)
+library(tidyverse)
+
+
+# Create DATA FRAME
+
+# List of flows with intensity for each flow
+links = data.frame(source=c("System_A Invoice %","System_A Invoice %", "System_B Invoice %", "System_C Invoice %", "Sytem_C Invoice %", "System_E Invoice %"), 
+                 target=c("System_C Invoice %","System_D Invoice %", "System_E Invoice %", "System_F Invoice %", "System_G Invoice %", "System_H Invoice %"), 
+                 value=c(2,3, 2, 3, 1, 3))
+
+# From these flows we need to create a node data frame
+nodes=data.frame(name=c(as.character(links$source), as.character(links$target)) %>% unique())
+
+# With networkD3, create connection 
+links$IDsource=match(links$source, nodes$name)-1 
+links$IDtarget=match(links$target, nodes$name)-1
+
+# Create Sankey Diagram
+sankeyNetwork(Links = links, Nodes = nodes,
+              Source = "IDsource", Target = "IDtarget",
+              Value = "value", NodeID = "name", 
+              sinksRight=FALSE)
+```
